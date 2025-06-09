@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+		<GamePath>D:\Unity\rocket_science</GamePath>
+		<AssemblyPath>\Library\ScriptAssemblies</AssemblyPath>
+		<Nullable>False</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GamePath)$(AssemblyPath)\Assembly-CSharp.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.Analysis">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.Analysis.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.API">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.API.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.Common">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.Common.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.Model">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.Model.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.Services">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.Services.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.Space">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.Space.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.Support">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.Support.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unbegames.UI">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unbegames.UI.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>$(GamePath)$(AssemblyPath)\Unity.Mathematics.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+		
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.55f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+    </Reference>
+  </ItemGroup>
+
+</Project>
