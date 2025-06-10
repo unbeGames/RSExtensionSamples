@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-		<GamePath>D:\Unity\rocket_science</GamePath>
+		<GamePath>E:\Unity\rocket_science</GamePath>
 		<AssemblyPath>\Library\ScriptAssemblies</AssemblyPath>
-		<Nullable>False</Nullable>
+		<Nullable>Disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
