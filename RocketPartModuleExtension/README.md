@@ -1,3 +1,4 @@
+An example of creating custom rocket part module and rocket system and adding them to existing parts. Includes also the UI part: adding your module to rocket part panel info during the flight and to the part tooltip in the assembly shop.
 
 ## Concepts
 
