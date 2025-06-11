@@ -3,14 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-		<GamePath>E:\Unity\rocket_science</GamePath>
-		<AssemblyPath>\Library\ScriptAssemblies</AssemblyPath>
+		<GamePath>D:\steam\tools\ContentBuilder\content\HDYLIEM\windows_x64</GamePath>
+		<AssemblyPath>\Rocket Science_Data\Managed</AssemblyPath>
 		<Nullable>Disable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -62,13 +58,18 @@
       <HintPath>$(GamePath)$(AssemblyPath)\Unity.Mathematics.dll</HintPath>
 			<Private>false</Private>
 			<ExcludeAssets>all</ExcludeAssets>
-    </Reference>
-		
+    </Reference>		
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.55f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(GamePath)$(AssemblyPath)\UnityEngine.CoreModule.dll</HintPath>
 			<Private>false</Private>
 			<ExcludeAssets>all</ExcludeAssets>
     </Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(GamePath)$(AssemblyPath)\Newtonsoft.Json.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+		</Reference>
   </ItemGroup>
+	
 
 </Project>

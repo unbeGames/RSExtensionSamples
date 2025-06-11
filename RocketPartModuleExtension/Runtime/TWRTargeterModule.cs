@@ -4,7 +4,7 @@ using UnbeGames.Model;
 namespace PartModuleExtensionSample {
   // part module config that is the same for all parts with the same defindex
   // that have this module
-  public struct EngineTWRTargeterConfig {
+  public struct TWRTargeterConfig {
     public float responseTime; // how quickly module can change engine throttle, fraction per second
     public float consumption; // electricity consumption W / s
     public float eceCoeff; // energy efficiency coefficient, in 0 - 1 range;
@@ -12,13 +12,13 @@ namespace PartModuleExtensionSample {
 
   // here we are storing part module state, like configuration that could be changed
   // during the flight
-  public struct EngineTWRTargeterState {
+  public struct TWRTargeterState {
     public bool isEnabled;
     public float targetTWR;
   }
 
   // implement interfaces IEnablableModule, IHeatFlow, IElectirictyFlow
-  public class TWRTargeterModule : RocketModule<EngineTWRTargeterConfig, EngineTWRTargeterState>, IEnablableModule, IHeatFlow, IElectirictyFlow {
+  public class TWRTargeterModule : RocketModule<TWRTargeterConfig, TWRTargeterState>, IEnablableModule, IHeatFlow, IElectirictyFlow {
     public float Consumption => config.consumption;
     public float EceCoeff => config.eceCoeff;
 
@@ -37,7 +37,10 @@ namespace PartModuleExtensionSample {
     // saved system indices, module need to track them
     // IMPORTANT: always initialize it with -1
     private int twrTargeterIndex = -1, electricityConsIndex = -1, thermoProducerIndex = -1;
-    
+
+    // name could be anything, but it is better use "{YourExtensionName}.{ClassName}"    
+    internal const string extensionPartModuleName = "PartModuleExtensionSample.TWRTargeterModule";
+
     public TWRTargeterModule(RocketPart part, JObject config, JObject state) : base(part, config, state) {
     }
 

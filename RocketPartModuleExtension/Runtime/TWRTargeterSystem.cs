@@ -31,7 +31,7 @@ namespace PartModuleExtensionSample {
       engineSystem = rocket.GetSystem<EngineSystem>();
     }
 
-    public int Add(RocketPart part, EngineTWRTargeterConfig config, EngineTWRTargeterState state, int electricityConsIndex) {
+    public int Add(RocketPart part, TWRTargeterConfig config, TWRTargeterState state, int electricityConsIndex) {
       // getting module position in arrays
       var index = Add(part);
 
