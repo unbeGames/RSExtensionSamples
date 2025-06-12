@@ -19,6 +19,10 @@ namespace PartModuleExtensionSample {
 
   // implement interfaces IEnablableModule, IHeatFlow, IElectirictyFlow
   public class TWRTargeterModule : RocketModule<TWRTargeterConfig, TWRTargeterState>, IEnablableModule, IHeatFlow, IElectirictyFlow {
+    public float TargetTWR => state.targetTWR;
+    public float ResponseTime => config.responseTime;
+
+    
     public float Consumption => config.consumption;
     public float EceCoeff => config.eceCoeff;
 
@@ -40,6 +44,7 @@ namespace PartModuleExtensionSample {
 
     // name could be anything, but it is better use "{YourExtensionName}.{ClassName}"    
     internal const string extensionPartModuleName = "PartModuleExtensionSample.TWRTargeterModule";
+    internal const string targetTWRStr = "targetTWR";
 
     public TWRTargeterModule(RocketPart part, JObject config, JObject state) : base(part, config, state) {
     }
@@ -100,10 +105,15 @@ namespace PartModuleExtensionSample {
       thermoProducerSys?.UpdateSysIndex(thermoProducerIndex, part.sysIndex);
     }
 
-    // this method is called when command was sent from the part panel UI
+    // this method is called when command was sent from the part panel UI to the module
     public override void Execute(JObject overrides) {
+      // built-in command
       if (overrides.TryGetValue(enableStr, out var token)) {
         SetEnabled(token.ToObject<bool>());
+      }
+      // out custom command
+      if(overrides.TryGetValue(targetTWRStr, out token)) {
+        SetTargetTWR(token.ToObject<float>());
       }
     }
 
@@ -114,6 +124,15 @@ namespace PartModuleExtensionSample {
       IsEnabled = isEnabled;
       // do not forget to update state in the system
       twrTargeterSystem?.UpdateState(twrTargeterIndex, isEnabled);
+    }
+
+    public void SetTargetTWR(float targetTWR) {
+      if(state.targetTWR == targetTWR) {
+        return;
+      }
+      state.targetTWR = targetTWR;
+      // don't forget update this value in system
+      twrTargeterSystem?.UpdateTargetTWR(twrTargeterIndex, state.targetTWR);
     }
   }
 }
