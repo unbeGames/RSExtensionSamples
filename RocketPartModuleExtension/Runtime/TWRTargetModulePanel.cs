@@ -3,7 +3,7 @@
 namespace PartModuleExtensionSample {
   // this is a module panel that will be visible when you will open part panel during the flight
   public class TWRTargetModulePanel : PartModulePanel<TWRTargeterModule> {
-    public override sbyte Priority => 16; // determines module position on UI 
+    public override sbyte Priority => 127; // determines module position on UI, higher values means higher in module list
 
     private ToggleParameter enableToggle;
     private FloatValueParameter electricity, heat;
@@ -50,15 +50,14 @@ namespace PartModuleExtensionSample {
     protected override void OnSetup() {
       base.OnSetup();
 
-      targetTWRParam.Set(module.TargetTWR);
       // here an example if min-max TWR range was configured per module
       // if it is the same, it could be done in Awake
-      targetTWRBinding.SetMinMax(0.1f, 10, remapTo01: false);
+      targetTWRBinding.SetMinMax(0.1f, 10, remapTo01: false);      
     }
 
     // parameters are interactable controls that could change part module state
     // they are updated every simulation step update
-    public override void UpdateParameters() {
+    protected override void UpdateParametersInternal() {
       enableToggle.Fetch();
       targetTWRParam.Fetch();
     }

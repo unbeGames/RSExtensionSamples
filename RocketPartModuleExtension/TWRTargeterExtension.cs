@@ -8,7 +8,7 @@ namespace PartModuleExtensionSample {
     // command module schema defindices
     private static readonly int[] commandModuleDefindices = new int[] { 1000, 1006 };
 
-    private bool moduleWasAddedToSchema;
+    private bool moduleWasAddedToSchema = false;
 
     public TWRTargeterExtension() {
     }
@@ -24,16 +24,20 @@ namespace PartModuleExtensionSample {
       // register flight UI panel
       GameAPI.RegisterPartModulePanel<TWRTargeterModule, TWRTargetModulePanel>();
 
-      // try to add module to existing part schema
-      AddModuleToExistingSchema();
+      // register assembly shop tooltip for module
+      GameAPI.RegisterPartModuleTooltip<TWRTargeterModule, TWRTargeterTooltip>();
+
+      // add module to existing part schema
+      // this will fail on first OnEnable since all game data still not loaded, but will work on subsequent Enable
+      TryAddModuleToExistingSchema();
 
       Log.Info($"{nameof(TWRTargeterExtension)} is succesfully enabled");
     }
 
-    // OnStart is called after game load when everything is initialized
-    // since OnEnable after load could not add module to schema, we need to it here
+    // OnStart is called after application fully loaded when everything is initialized    
+    // since OnEnable right after app load could not add module to schema, we need to it here
     public override void OnStart() {
-      AddModuleToExistingSchema();
+      TryAddModuleToExistingSchema();
     }
 
     // IMPORTANT: always deregister everything you've registered
@@ -42,8 +46,13 @@ namespace PartModuleExtensionSample {
       // remove from part schema first
       for (int i = 0; i < commandModuleDefindices.Length; i++) {
         var partSchema = partSchemaCache.Get(commandModuleDefindices[i]);
-        GameAPI.RemovePartModuleFromPartSchema<TWRTargeterModule>(partSchema);
+        GameAPI.DeregisterAddPartModuleFromPartSchema<TWRTargeterModule>(partSchema);
       }
+
+      moduleWasAddedToSchema = false;
+
+      // deregisters tooltip for module
+      GameAPI.DeregsiterPartModuleTooltip<TWRTargeterModule>();
 
       // deregister flight UI panel
       GameAPI.DeregisterPartModulePanel<TWRTargeterModule>();
@@ -54,15 +63,17 @@ namespace PartModuleExtensionSample {
       // and finally module type
       GameAPI.DeregisterPartModuleType<TWRTargeterModule>(TWRTargeterModule.extensionPartModuleName);
 
-      moduleWasAddedToSchema = false;
-
       Log.Info($"{nameof(TWRTargeterExtension)} is succesfully disabled");
     }
 
-    private void AddModuleToExistingSchema() {
+
+    private void TryAddModuleToExistingSchema() {
       // when extension is enabled on game load, part schema caches is not loaded yet, we need to check that here
       var partSchemaCache = CacheStore.Get<RocketPartCache>();
       if (partSchemaCache.isPreloaded && !moduleWasAddedToSchema) {
+        // it would not be added immediately, only after game load for games that supports mods
+        // survival mode will not support mods and achievemnts at the same time in the future
+
         // the way to get all schema items and then enumarate them applying different property filters
         // var allParts = partSchemaCache.All();
 
@@ -71,7 +82,7 @@ namespace PartModuleExtensionSample {
         var state = new TWRTargeterState { isEnabled = false, targetTWR = 2 };
         for (int i = 0; i < commandModuleDefindices.Length; i++) {
           var partSchema = partSchemaCache.Get(commandModuleDefindices[i]);
-          GameAPI.AddPartModuleToPartSchema<TWRTargeterModule, TWRTargeterConfig, TWRTargeterState>(partSchema, config, state);
+          GameAPI.RegisterAddPartModuleToPartSchema<TWRTargeterModule, TWRTargeterConfig, TWRTargeterState>(partSchema, config, state);
         }
 
         moduleWasAddedToSchema = true;
