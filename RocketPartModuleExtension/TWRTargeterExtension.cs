@@ -8,7 +8,7 @@ namespace PartModuleExtensionSample {
     // command module schema defindices
     private static readonly int[] commandModuleDefindices = new int[] { 1000, 1006 };
 
-    private bool moduleWasAddedToSchema = false;
+    private bool moduleWasAddedToSchema = false; 
 
     public TWRTargeterExtension() {
     }

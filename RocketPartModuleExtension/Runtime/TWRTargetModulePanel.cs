@@ -34,12 +34,13 @@ namespace PartModuleExtensionSample {
       BindHeat(heat, module);
 
       // our custom controls
-      respnseTime = CreateFloatValueParameter("Response time");
+      respnseTime = CreateFloatValueParameter("Response time");      
       // binding our custom value perameter this way will automatically check bitrate and electricity
       // and turn off data if there is not enough of one of it
       Bind(respnseTime, ResponseTime, bitrate: 8);
 
       targetTWRParam = CreateSliderInputParameter("Target TWR", out targetTWRBinding);
+      targetTWRParam.SetUnitText(string.Empty);
       // third parameter sets the function that will be called when you change the control
       // you can use GetBinding<float>(TWRTargeterModule.targetTWRStr) instead as a shortcut
       Bind(targetTWRParam, TargetTWR, SetTargetTWR);

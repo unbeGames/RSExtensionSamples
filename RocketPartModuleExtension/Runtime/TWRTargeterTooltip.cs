@@ -2,6 +2,8 @@
 
 namespace PartModuleExtensionSample {
   public class TWRTargeterTooltip : PartModuleTooltip<TWRTargeterModule> {
+    public override sbyte Priority => 64;
+
     private TooltipUnit responseTime;
     private TooltipUnit consumption;
 

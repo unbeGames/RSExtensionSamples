@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
+    <TargetFramework>netstandard2.1</TargetFramework>    
 		<GamePath>D:\steam\tools\ContentBuilder\content\HDYLIEM\windows_x64</GamePath>
 		<AssemblyPath>\Rocket Science_Data\Managed</AssemblyPath>
-		<Nullable>Disable</Nullable>
+		<Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -64,12 +63,15 @@
 			<Private>false</Private>
 			<ExcludeAssets>all</ExcludeAssets>
     </Reference>
-		<Reference Include="UnityEngine.CoreModule">
+		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(GamePath)$(AssemblyPath)\Newtonsoft.Json.dll</HintPath>
 			<Private>false</Private>
 			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
-  </ItemGroup>
-	
-
+		<Reference Include="UnitsNet">
+			<HintPath>$(GamePath)$(AssemblyPath)\UnitsNet.dll</HintPath>
+			<Private>false</Private>
+			<ExcludeAssets>all</ExcludeAssets>
+		</Reference>
+	</ItemGroup>
 </Project>
