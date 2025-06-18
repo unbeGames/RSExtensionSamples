@@ -3,7 +3,10 @@ using Unity.Collections;
 using Unity.Mathematics;
 
 namespace PartModuleExtensionSample {
+  // we are using RocketSingleModuleSystem here because this system process modules of a single type
   public class TWRTargeterSystem : RocketSingleModuleSystem<TWRTargeterModule> {
+    // you need to store all data in arrays, because RocketPartSystem expects that
+    // also this way you can easily expose it using ReadOnlySpan<T> with other systems
     private float[] targetTWR;
     private float[] responseTime;
     

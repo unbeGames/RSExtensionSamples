@@ -17,12 +17,12 @@ namespace PartModuleExtensionSample {
     public float targetTWR;
   }
 
-  // implement interfaces IEnablableModule, IHeatFlow, IElectirictyFlow
+  // implement interfaces IEnablableModule, IHeatFlow, IElectirictyFlow, this is a common functionality
+  // for a lot of modules, so some of that streamlined for UI for example
   public class TWRTargeterModule : RocketModule<TWRTargeterConfig, TWRTargeterState>, IEnablableModule, IHeatFlow, IElectirictyFlow {
     public float TargetTWR => state.targetTWR;
     public float ResponseTime => config.responseTime;
-
-    
+        
     public float Consumption => config.consumption;
     public float EceCoeff => config.eceCoeff;
 
