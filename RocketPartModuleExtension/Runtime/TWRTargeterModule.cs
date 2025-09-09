@@ -36,11 +36,10 @@ namespace PartModuleExtensionSample {
     // since rocket consumes electricity and produce heat, we need to add it to those systems too
     private TWRTargeterSystem twrTargeterSystem;
     private ElectricityConsumptionSystem electricityConsumptionSys;
-    private ThermoProducerSystem thermoProducerSys;
 
     // saved system indices, module need to track them
     // IMPORTANT: always initialize it with -1
-    private int twrTargeterIndex = -1, electricityConsIndex = -1, thermoProducerIndex = -1;
+    private int twrTargeterIndex = -1, electricityConsIndex = -1;
 
     // name could be anything, but it is better use "{YourExtensionName}.{ClassName}"    
     internal const string extensionPartModuleName = "PartModuleExtensionSample.TWRTargeterModule";
@@ -58,15 +57,10 @@ namespace PartModuleExtensionSample {
     // here we adding our module to all rocket systems that need to process it
     // and saving returned index to respective system
     public override void Attach(Rocket rocket) {
-      // add to thermo producer, this system needs to know module type because it can
-      // process modules of different types
-      thermoProducerSys = rocket.GetSystem<ThermoProducerSystem>();
-      thermoProducerIndex = thermoProducerSys.Add(part, GetType());
-
       // this system is also a multi-module one, but other than that it needs to know
       // thermoproducer index, so it can automatically produce heat when electricity is consuned
       electricityConsumptionSys = rocket.GetSystem<ElectricityConsumptionSystem>();
-      electricityConsIndex = electricityConsumptionSys.Add(part, GetType(), Consumption, 1 - EceCoeff, thermoProducerIndex);
+      electricityConsIndex = electricityConsumptionSys.Add(part, GetType(), Consumption, 1 - EceCoeff);
 
       // add module to the system itself
       twrTargeterSystem = rocket.GetSystem<TWRTargeterSystem>();
@@ -77,7 +71,6 @@ namespace PartModuleExtensionSample {
     public override void Detach(Rocket rocket) {
       RemoveFromSystem(ref twrTargeterSystem, ref twrTargeterIndex);
       RemoveFromSystem(ref electricityConsumptionSys, ref electricityConsIndex);
-      RemoveFromSystem(ref thermoProducerSys, ref thermoProducerIndex);
     }
 
     // system index was changed, determine what system and update respective index
@@ -91,18 +84,13 @@ namespace PartModuleExtensionSample {
           // electricity consumption changed index, need to update it in twr targeter system
           twrTargeterSystem.UpdateConsumptionIndex(twrTargeterIndex, electricityConsIndex);
           break;
-        case ThermoProducerSystem _:
-          // thermo production changed index, we need to update it in electricity system
-          thermoProducerIndex = index;
-          electricityConsumptionSys.Update(electricityConsIndex, thermoProducerIndex);
-          break;
       }
     }
 
     // part system index changed, part system index correspond to systems, that every rocket part has
-    // like thermodynamics, drag, etc
+    // electricity system uses this index to store produced heat in the thermo production system
     public override void ChangePartSystemIndex(int sysIndex) {
-      thermoProducerSys?.UpdateSysIndex(thermoProducerIndex, part.sysIndex);
+      electricityConsumptionSys?.UpdateSysIndex(electricityConsIndex, sysIndex);
     }
 
     // this method is called when command was sent from the part panel UI to the module
